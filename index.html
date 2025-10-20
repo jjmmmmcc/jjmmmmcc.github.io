@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>João Chaves | Portfolio</title>
+    
+    <style>
+        /* Basic styles for the whole page */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #f0f0f0;
+            overflow: hidden; /* Prevents scrollbars */
+            cursor: pointer; /* Indicates the page is clickable */
+        }
+
+        /* Styles for the text in the top-left corner */
+        .info-text {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            z-index: 10; /* Ensures text stays on top of the image */
+            color: #333; /* Default text color */
+            font-size: 14px;
+            max-width: 550px; /* Wider text column */
+            font-weight: bold; /* Bold text */
+            transition: color 0.4s ease-in-out; /* This makes the color change smooth */
+            pointer-events: none; /* Makes text non-interactive so it doesn't block clicks */
+        }
+
+        /* Container to hold the image */
+        .image-container {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        /* Styles for the full bleed image (fade transition removed) */
+        #portfolio-image {
+            width: 100vw; /* 100% of viewport width */
+            height: 100vh; /* 100% of viewport height */
+            object-fit: cover; /* Scales image to cover the screen, cropping if needed */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Informational text block -->
+    <div class="info-text">
+        <p>João Chaves is a designer and art director. Based in Bristol, UK.</p>
+        <p>For commissions or collaborations info@joar-chaves.com</p>
+    </div>
+
+    <!-- Image container -->
+    <div class="image-container">
+        <img id="portfolio-image" src="images/1.jpg" alt="Portfolio Image">
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const imageList = [
+                'images/1.jpg', 'images/2.jpg', 'images/3.jpg', 'images/4.jpg',
+                'images/5.jpg', 'images/6.jpg', 'images/7.jpg', 'images/8.jpg',
+                'images/9.jpg', 'images/10.jpg', 'images/11.jpg', 'images/12.jpg',
+                'images/13.jpg', 'images/14.jpg', 'images/15.jpg', 'images/16.jpg',
+                'images/17.jpg', 'images/18.jpg', 'images/19.jpg', 'images/20.jpg',
+                'images/21.jpg', 'images/22.jpg', 'images/23.jpg', 'images/24.jpg',
+                'images/25.jpg', 'images/26.jpg', 'images/27.jpg', 'images/28.jpg',
+                'images/29.jpg', 'images/30.jpg', 'images/31.jpg', 'images/32.jpg',
+                'images/34.jpg', 'images/35.jpg', 'images/Berghaus-1.jpg',
+                'images/RS356776_salford_central_station-11-scr.jpg',
+            ];
+
+            const portfolioImage = document.getElementById('portfolio-image');
+            const infoText = document.querySelector('.info-text');
+            let currentImageIndex = 0;
+            let imageChangeTimer; // To hold the interval timer
+            
+            portfolioImage.onerror = () => {
+                console.error("Image failed to load. Check folder structure and path:", portfolioImage.src);
+            };
+
+            // This runs after a new image loads to check its brightness
+            portfolioImage.onload = () => {
+                updateTextColor();
+                // Opacity logic removed for instant change
+            };
+            
+            function updateTextColor() {
+                if (!portfolioImage.naturalWidth || !portfolioImage.naturalHeight) {
+                    return; 
+                }
+
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                const checkWidth = infoText.offsetWidth;
+                const checkHeight = infoText.offsetHeight;
+
+                canvas.width = checkWidth;
+                canvas.height = checkHeight;
+                
+                context.drawImage(portfolioImage, 0, 0, checkWidth, checkHeight, 0, 0, checkWidth, checkHeight);
+                
+                const imageData = context.getImageData(0, 0, checkWidth, checkHeight).data;
+                
+                let totalBrightness = 0;
+                for (let i = 0; i < imageData.length; i += 4) {
+                    const r = imageData[i];
+                    const g = imageData[i+1];
+                    const b = imageData[i+2];
+                    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+                    totalBrightness += brightness;
+                }
+                
+                const averageBrightness = totalBrightness / (checkHeight * checkWidth);
+
+                const brightnessThreshold = 105; 
+                
+                if (averageBrightness < brightnessThreshold) {
+                    infoText.style.color = '#ffffff'; // White text
+                } else {
+                    infoText.style.color = '#333333'; // Dark grey text
+                }
+            }
+
+            // Simplified function for an instant image change
+            function changeImage() {
+                currentImageIndex = (currentImageIndex + 1) % imageList.length;
+                portfolioImage.src = imageList[currentImageIndex];
+            }
+
+            // Function to start the automatic timer
+            function startTimer() {
+                // Clear any existing timer before starting a new one
+                clearInterval(imageChangeTimer);
+                imageChangeTimer = setInterval(changeImage, 4000);
+            }
+
+            // Add a click event listener to the whole page
+            document.body.addEventListener('click', () => {
+                changeImage(); // Change image immediately on click
+                startTimer();  // Reset the timer
+            });
+            
+            // --- Initialization ---
+            startTimer(); // Start the automatic image cycling when the page loads
+            setTimeout(updateTextColor, 100); // Check the first image's color
+        });
+    </script>
+    
+</body>
+</html>
