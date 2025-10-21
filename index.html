@@ -62,6 +62,16 @@
             height: 100vh;
             object-fit: cover;
         }
+
+                /* --- Responsive styles for mobile devices --- */
+        @media (max-width: 768px) {
+          .info-text {
+            /* On screens 768px or narrower, these styles will override the ones above */
+            right: 30px;     /* Add a matching margin on the right */
+            width: auto;     /* Let the browser calculate the width based on the margins */
+            max-width: none; /* Remove the fixed max-width on small screens */
+          }
+        }
     </style>
 </head>
 <body>
