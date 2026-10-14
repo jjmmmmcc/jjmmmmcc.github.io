@@ -8,8 +8,8 @@
     
     <style>
         @font-face {
-          font-family: "Bespoke";
-          src: url("fonts/Bespoke.woff") format("woff");
+          font-family: "Inter";
+          src: url("fonts/Inter-Medium.woff2") format("woff2");
         }
 
         /* Basic styles for the whole page */
@@ -18,7 +18,7 @@
             padding: 0;
             width: 100%;
             height: 100%;
-            font-family: "Bespoke", sans-serif;
+            font-family: "Inter", sans-serif;
             background-color: #f0f0f0;
             overflow: hidden;
             cursor: pointer;
@@ -32,36 +32,32 @@
             z-index: 10;
             color: #333;
             font-size: 16px;
-            font-family: "Bespoke", sans-serif;
-            font-weight: 400;
+            font-family: "Inter", sans-serif;
+            font-weight: 500;
             font-style: normal;
             max-width: 530px;
             transition: color 0.4s ease-in-out;
             cursor: text;
         }
 
-        /* --- FIX: Remove default paragraph margin for precise alignment --- */
         .info-text p {
             margin: 0;
         }
 
-        /* Styles for links to match the text color */
         .info-text a {
-            color: inherit; /* This makes the link inherit the dynamic color (black or white) */
-            text-decoration: none; /* Removes the default underline */
+            color: inherit;
+            text-decoration: none;
         }
 
         .info-text a:hover {
-            text-decoration: underline; /* Adds an underline when you hover over the link */
+            text-decoration: underline;
         }
 
-        /* Container to hold the image */
         .image-container {
             width: 100vw;
             height: 100vh;
         }
 
-        /* Styles for the full bleed image */
         #portfolio-image {
             width: 100vw;
             height: 100vh;
@@ -71,10 +67,9 @@
                 /* --- Responsive styles for mobile devices --- */
         @media (max-width: 768px) {
           .info-text {
-            /* On screens 768px or narrower, these styles will override the ones above */
-            right: 30px;     /* Add a matching margin on the right */
-            width: auto;     /* Let the browser calculate the width based on the margins */
-            max-width: none; /* Remove the fixed max-width on small screens */
+            right: 30px;
+            width: auto;
+            max-width: none;
           }
         }
     </style>
@@ -83,7 +78,6 @@
 
     <!-- Informational text block -->
     <div class="info-text">
-        <!-- The text is now wrapped in a single paragraph for proper structure -->
         <p>João Chaves, multidisciplinary designer and art director. Based in Bristol, UK.
         Currently at <a href="https://www.clubhouse.studio" target="_blank">Clubhouse Studio</a>.
         Making music as <a href="https://www.penhasdouradas.eu" target="_blank">Penhas Douradas</a>.
